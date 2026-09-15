@@ -18,25 +18,20 @@ class Solution {
         if(root==null) return 0;
         return 1+Math.max(levels(root.left),levels(root.right));
     }
-    public void nThLevel(TreeNode root,int cur,int level,List<Integer> list){
+    public void nThLevel(TreeNode root,int level,List<List<Integer>> ans){
         if(root==null) return;
-        if(cur==level){
-            list.add(root.val);
-        }
-        nThLevel(root.left,cur+1,level,list);
-        nThLevel(root.right,cur+1,level,list);
-    }
-    public void levelsOrder(TreeNode root,List<List<Integer>> ans){
-        int levels = levels(root);
-        for(int i=1;i<=levels;i++){
-            ArrayList<Integer> list = new ArrayList<>();
-            nThLevel(root,1,i,list);
-            ans.add(list);
-        }
+        ans.get(level).add(root.val);
+        nThLevel(root.left,level+1,ans);
+        nThLevel(root.right,level+1,ans);
     }
     public List<List<Integer>> levelOrder(TreeNode root) {
+        int n = levels(root);
         List<List<Integer>> ans = new ArrayList<>();
-        levelsOrder(root,ans);
+        for(int i=1;i<=n;i++){
+            List<Integer> list = new ArrayList<>();
+            ans.add(list);
+        }
+        nThLevel(root,0,ans);
         return ans;
     }
 }
