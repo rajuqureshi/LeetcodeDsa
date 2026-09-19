@@ -1,19 +1,19 @@
 class Solution {
-    TreeNode prev = null;
-    boolean flag = true;
-    public void inorder(TreeNode root){
+    public void inorder(TreeNode root,TreeNode[] prev,boolean[] flag){
         if(root==null) return;
-        inorder(root.left);
-        if(prev!=null){
-            if(root.val<=prev.val){
-                flag = false;
+        inorder(root.left,prev,flag);
+        if(prev[0]!=null){
+            if(root.val<=prev[0].val){
+                flag[0] = false;
             }
         }
-        prev = root;
-        inorder(root.right);
+        prev[0] = root;
+        inorder(root.right,prev,flag);
     }
     public boolean isValidBST(TreeNode root) {
-        inorder(root);
-        return flag;
+        TreeNode[] prev = new TreeNode [1];
+        boolean[] flag = new boolean []{true};
+        inorder(root,prev,flag);
+        return flag[0];
     }
 }
