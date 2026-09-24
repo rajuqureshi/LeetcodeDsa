@@ -15,16 +15,28 @@
  */
 class Solution {
     public void flatten(TreeNode root) {
-        // using recursion
+        // using Morris Traversal
         if(root==null) return;
-        flatten(root.left);
-        flatten(root.right);
-        TreeNode r = root.right;
-        root.right = root.left;
-        root.left = null;
-        TreeNode temp = root;
-        while(temp.right!=null) temp = temp.right;
-        temp.right = r;
+        TreeNode curr = root;
+        while(curr!=null){
+            if(curr.left!=null){
+            TreeNode r = curr.right;
+            curr.right = curr.left;
+            // finding Predesser
+            TreeNode pred = curr.left;
+            while(pred.right!=null) pred = pred.right;
 
+            // Linking
+            pred.right = r;
+            curr = curr.left;
+            } else{
+                curr = curr.right;
+            }
+        }
+        TreeNode temp = root;
+        while(temp.right!=null){
+            temp.left=null;
+            temp = temp.right;
+        }
     }
 }
