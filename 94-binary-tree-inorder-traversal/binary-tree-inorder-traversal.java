@@ -15,25 +15,29 @@
  */
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode current = root;
+        // Using Morris Traversal Algorithm
+        List<Integer> ans = new ArrayList<>();
+        TreeNode curr = root;
+        while(curr!=null){
+            if(curr.left!=null){
+                TreeNode pred = curr.left;
+                while(pred.right!=null && pred.right!=curr){
+                    pred = pred.right;
+                }
 
-        while (current != null || !stack.isEmpty()) {
-            // Push all left children of the current node to the stack
-            while (current != null) {
-                stack.push(current);
-                current = current.left;
+                if(pred.right==null){ // link with curr
+                    pred.right = curr;
+                    curr = curr.left;
+                } else{ // pred.right==null : Unlink
+                    pred.right = null;
+                    ans.add(curr.val);
+                    curr = curr.right;
+                }
+            } else { // curr.left==null
+                ans.add(curr.val);
+                curr = curr.right;
             }
-
-            // Current is null, so pop the top item from the stack
-            current = stack.pop();
-            result.add(current.val); // Process the node
-
-            // Move to the right subtree
-            current = current.right;
         }
-
-        return result;
+        return ans;
     }
 }
