@@ -1,15 +1,12 @@
 class Solution {
-    int[] dp;
-    public int help(int[] arr,int i){
-        if(i<0) return 0;
-        if(dp[i]>=0) return dp[i];
-        int result = Math.max(help(arr,i-2)+ arr[i] ,help(arr,i-1));
-        dp[i] = result;
-        return result;
+    public int houseRob(int[] arr,int i,int[] dp){
+        if(i>=arr.length) return 0;
+        if(dp[i]!=-1) return dp[i];
+        return dp[i] = Math.max(houseRob(arr,i+1,dp),(arr[i]+houseRob(arr,i+2,dp)));
     }
     public int rob(int[] nums) {
-        dp = new int[nums.length+1];
+        int[] dp = new int[nums.length];
         Arrays.fill(dp,-1);
-        return help(nums,nums.length-1);
+        return houseRob(nums,0,dp);
     }
 }
