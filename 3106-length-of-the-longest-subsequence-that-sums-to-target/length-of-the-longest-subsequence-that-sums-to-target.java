@@ -2,13 +2,13 @@ class Solution {
     public int subSequence(List<Integer> arr,int i,int target,int[][] dp){
         if(i==arr.size()){
             if(target==0) return 0;
-            else return -10000;
+            else return Integer.MIN_VALUE;
         }
         if(dp[i][target]!=-1) return dp[i][target];
         int skip = subSequence(arr,i+1,target,dp);
         if(target-arr.get(i)<0) return dp[i][target] = skip;
         
-        int pick = -10000;
+        int pick = Integer.MIN_VALUE;
         if(target-arr.get(i)>=0){
             pick = 1+ subSequence(arr,i+1,target-arr.get(i),dp);
             
