@@ -1,5 +1,5 @@
 class Solution {
-    int[][] dp;
+    static int[][] dp;
     public int  commonSequence(StringBuilder s1,StringBuilder s2,int m,int n){
         if(m<0 || n<0) return 0;
         if(dp[m][n]!=-1) return dp[m][n];
