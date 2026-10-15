@@ -8,6 +8,7 @@ class Solution {
                 int d = set.size();
                 ans+=d*d;
             }
+            set.clear();
         }
         return ans;
     }
